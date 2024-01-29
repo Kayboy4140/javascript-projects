@@ -24,21 +24,43 @@ let cargoHold = ['meal kits', 'space suits', 'first-aid kit', 'satellite', 'gold
 console.log("Fuel level: " + checkFuel(fuelLevel));
 console.log("Hold status: " + holdStatus(cargoHold));
 
-/* Steal some fuel from the shuttle:
- * /
+// Steal some fuel from the shuttle:
+ 
  
 //a). Define an anonymous function and set it equal to a variable with a normal, non-suspicious name. The function takes one parameter. This will be the fuel level on the shuttle.
 
+let beauty = function(a) {
+  if (checkFuel(a) === 'green') {
+    return a - 100001;
+  } else if (checkFuel(a) === 'yellow') {
+    return a - 50001;
+  } else {
+    return a;
+  }
+};
+console.log(beauty(150000));
+
 //b). You must siphon off fuel without alerting the TAs. Inside your function, you want to reduce the fuel level as much as possible WITHOUT changing the color returned by the checkFuel function.
+
+
 
 //c). Once you figure out how much fuel to pump out, return that value.
 
 //d). Decide where to best place your function call to gather our new fuel.
 
-/* Next, liberate some of that glorious cargo.
- * /
+//  Next, liberate some of that glorious cargo.
 
 //a). Define another anonymous function with an array as a parameter, and set it equal to another innocent variable.
+
+let love = function(arr) {
+  let newArr = [];
+  newArr.push(arr[3], arr[4]);
+  arr.splice(3,2, 'cookies', 'pen');
+  return newArr;
+}
+
+console.log(love(cargoHold));
+
 
 //b). You need to swipe two items from the cargo hold. Choose well. Stealing water ain’t gonna get us rich. Put the swag into a new array and return it from the function.
 
@@ -54,4 +76,11 @@ console.log("Hold status: " + holdStatus(cargoHold));
 //b). Call your anonymous fuel and cargo functions from within irs.
 
 //c). Use a template literal to return, "Raided _____ kg of fuel from the tanks, and stole ____ and ____ from the cargo hold."
+*/
 
+function irs(levelOfFuel, itemsInCargo) {
+  let arr = love(cargoHold);
+  return `Raided ${beauty(fuelLevel)} kg of fuel from the tanks, and stole ${arr[0]} and ${arr[1]} from the cargo hold.`
+}
+
+console.log(irs(150000,"gold"));
