@@ -5,3 +5,12 @@
 // However, if the denominator is zero you should throw the error, "Attempted to divide by zero."
 
 // Code your divide function here:
+
+function divide(numerator, denominator) {
+    if (denominator !== 0) {
+        return numerator/denominator;
+    } 
+    throw Error("Attempted to divide by zero.");
+}
+
+// console.log(divide(2,0));
