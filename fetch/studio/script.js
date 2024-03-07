@@ -1,88 +1,41 @@
-//TODO: Add Your Code Below
-// let jsonArray = [
-//     {
-//         "id": 1,
-//         "active": false,
-//         "firstName": "Mae",
-//         "lastName": "Jemison",
-//         "skills": [
-//             "Physician", "Chemical Engineer"
-//         ],
-//         "hoursInSpace": 190,
-//         "picture": "mae-jemison.jpg"
-//     },
-//     {
-//         "id": 2,
-//         "active": false,
-//         "firstName": "Frederick",
-//         "lastName": "Gregory",
-//         "skills": [
-//             "Information Systems", "Shuttle Pilot", "Fighter Pilot", "Helicopter Pilot", "Colonel USAF"
-//         ],
-//         "hoursInSpace": 455,
-//         "picture": "frederick-gregory.jpg"
-//     },
-//     {
-//         "id": 3,
-//         "active": false,
-//         "firstName": "Ellen",
-//         "lastName": "Ochoa",
-//         "skills": [
-//             "Physics", "Electrical Engineer"
-//         ],
-//         "hoursInSpace": 979,
-//         "picture": "ellen-ochoa.jpg"
-//     },
-//     {
-//         "id": 4,
-//         "active": false,
-//         "firstName": "Guion",
-//         "lastName": "Bluford",
-//         "skills": [
-//             "Aerospace Engineer", "Philosophy", "Physics", "Colonel USAF",
-//             "Fighter Pilot"
-//         ],
-//         "hoursInSpace": 686,
-//         "picture": "guion-bluford.jpg"
-//     },
-//     {
-//         "id": 5,
-//         "active": false,
-//         "firstName": "Sally",
-//         "lastName": "Ride",
-//         "skills": [
-//             "Physicist", "Astrophysics"
-//         ],
-//         "hoursInSpace": 343,
-//         "picture": "sally-ride.jpg"
-//     },
-//     {
-//         "id": 6,
-//         "active": true,
-//         "firstName": "Kjell",
-//         "lastName": "Lindgren",
-//         "skills": [
-//             "Physician", "Surgeon", "Emergency Medicine"
-//         ],
-//         "hoursInSpace": 15,
-//         "picture": "kjell-lindgren.jpg"
-//     },
-//     {
-//         "id": 7,
-//         "active": true,
-//         "firstName": "Jeanette",
-//         "lastName": "Epps",
-//         "skills": [
-//             "Physicist", "Philosophy", "Aerospace Engineer"
-//         ],
-//         "hoursInSpace": 0,
-//         "picture": "jeanette-epps.jpg"
-//     }
-// ];
 
-// for (let i = 0; i < jsonArray.length; i++) {
-//     let name = jsonArray[i].firstName + jsonArray[i].lastName;
-//     let hours = jsonArray[i].hoursInSpace;
-//     let status = jsonArray[i].active;
-//     let skill = jsonArray[i].skills.join();
-// }
+window.addEventListener("load", function() {
+
+    const container = this.document.getElementById("container");
+
+    fetch("https://handlers.education.launchcode.org/static/astronauts.json").then(function(response) {
+      response.json().then(function(data) {
+        const container = document.getElementById("container");
+        console.log(data);
+
+        data.sort(function (a, b) {
+            return a.hoursInSpace < b.hoursInSpace ? 1 : -1;
+        });
+
+        const count = document.getElementById("count");
+        count.innerHTML = `These ${data.length} extraordinary people are a few of the handful of humans who have been able 
+        to look down on the planet earth from the outer space.`;
+
+        for (let i=0; i < data.length; i++) {
+            let astronaut = data[i];
+
+            let activeClass = astronaut.active ? "active" : "";
+
+            container.innerHTML += `
+            <div class="astronaut">
+                <div class="bio">
+                    <h3>${astronaut.firstName} ${astronaut.lastName}</h3>
+                    <ul>
+                        <li>Hours in space: ${astronaut.hoursInSpace}</li>
+                        <li class="${activeClass}">Active: ${astronaut.active}</li>
+                        <li>Skills: ${astronaut.skills.join(", ")}</li>
+                    </ul>
+                </div>
+                <img class="avatar" src="${astronaut.picture}">
+            </div>
+            
+            `
+        }
+      });
+    });
+});
