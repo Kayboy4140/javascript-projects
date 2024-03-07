@@ -2,18 +2,83 @@
 
 <head>
 	<meta charset="utf-8">
+	<link href="./styles.css" type="text/css" rel="stylesheet" />
+
 	<script>
-		// TODO: create a handler
-    window.addEventListener("load", function(){
-        // TODO: register the handler
-    });
+
+		let actions = {
+	 		google: "https://www.google.com/search",
+			duckDuckGo: "https://www.duckduckgo.com",
+			bing: "https://www.bing.com/search",
+			ask: "https://www.ask.com/web"
+		};
+
+		function setSearchEngine() {
+			let choice = document.querySelector("input[name=engine]:checked");
+			let query = document.getElementById("q");
+			let form = document.getElementById("searchForm");
+
+			//Bonus Mission Part 1: Add Validation
+
+			//Option 1: Use Window Alert
+			// if (query.value.trim() === "") {
+			// 	alert("Oops! You did not enter anything to search for.");
+			// 	event.preventDefault();
+			// } else if (!choice) {
+			// 	alert("Oops! Which search engine do you want to use?");
+			// 	event.preventDefault();
+			// };
+
+
+			//Option 2: Use an error box on the page with text
+			let errorBox = document.getElementById("error-box");
+			let errorMsg = document.getElementById("error-msg");
+
+			if (query.value.trim() === "") {
+				errorMsg.innerHTML = "Oops! You did not enter anything to search for.";
+				errorBox.style.visibility = "visible";
+				event.preventDefault();
+			} else if (!choice) {
+				errorMsg.innerHTML = "Oops! Which search engine do you want to use?";
+				errorBox.style.visibility = "visible";
+				event.preventDefault();
+			} else {
+				errorBox.style.visibility = "hidden";
+			}
+
+
+			let actionURL = actions[choice.value];
+			form.action = actionURL;
+		}
+    	
+		window.addEventListener("load", function() {
+			let form = document.getElementById("searchForm");
+        	form.addEventListener("submit", setSearchEngine);
+    	});
+
 	</script>
 </head>
 
 <body>
+	<h1>Kay's Search Engine</h1>
 
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
-	</form>
+	<div id="search-bar">
+		<p id="search-header"> Search Extravagantly! </p>
+		
+		<form id="searchForm" target="_blank">
+			<input id="q" type="text" name="q"/>
+			<label>Google<input type="radio" name="engine" value="google"/></label>
+			<label>DuckDuckGo<input type="radio" name="engine" value="duckDuckGo"/></label>
+			<label>Bing<input type="radio" name="engine" value="bing"/></label>
+			<label>Ask<input type="radio" name="engine" value="ask"/></label>
+			<button id="submit" value="Go!">Go!</button>
+		</form>
+
+	</div>
+
+
+	<div id="error-box">
+		<p id="error-msg"></p>
+	</div>
 
 </body>
